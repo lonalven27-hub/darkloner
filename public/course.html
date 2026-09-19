@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Course — DarkLoner</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo">Dark<span>Loner</span></a>
+  <div class="nav-links">
+    <a href="dashboard.html">Dashboard</a>
+    <button id="logout" class="btn small">Logout</button>
+  </div>
+</nav>
+
+<main class="course-view">
+  <h1 id="course-title">Loading...</h1>
+  <p id="course-desc" class="muted"></p>
+  <div id="course-body" class="course-body"></div>
+  <a href="dashboard.html" class="btn">← Back to Dashboard</a>
+</main>
+
+<script>
+const params = new URLSearchParams(location.search);
+const id = params.get('id');
+const user = JSON.parse(localStorage.getItem('dl_user') || 'null');
+
+if (!user) { window.location.href = 'login.html'; }
+
+const courses = {
+  '1': { title: 'HTML & CSS Foundations', tier: 'free', desc: 'Build your first web pages.',
+    body: '<h3>Lesson 1</h3><p>HTML structures the page. CSS styles it.</p><h3>Lesson 2</h3><p>Practice: build a personal page.</p>' },
+  '2': { title: 'JavaScript Basics', tier: 'free', desc: 'Variables, functions, loops.',
+    body: '<h3>Lesson 1</h3><p>let, const, functions, arrays.</p><h3>Lesson 2</h3><p>Build a to-do app.</p>' },
+  '3': { title: 'Node.js & Backend', tier: 'premium', desc: 'Servers, APIs, databases.',
+    body: '<h3>Lesson 1</h3><p>Express server basics.</p><h3>Lesson 2</h3><p>REST API + database.</p>' },
+  '4': { title: 'Website Builder Track', tier: 'premium', desc: 'Build and launch real sites.',
+    body: '<h3>Lesson 1</h3><p>Planning a client site.</p><h3>Lesson 2</h3><p>Deploy to a real domain.</p>' },
+  '5': { title: 'Cyber Security Essentials', tier: 'pro', desc: 'Ethical hacking, defenses.',
+    body: '<h3>Lesson 1</h3><p>CIA triad, threat models.</p><h3>Lesson 2</h3><p>OWASP Top 10 walkthrough.</p>' },
+  '6': { title: 'Advanced Pentesting', tier: 'elite', desc: 'Labs, real-world scenarios.',
+    body: '<h3>Lesson 1</h3><p>Recon and enumeration.</p><h3>Lesson 2</h3><p>Reporting and remediation.</p>' }
+};
+
+const rank = { free: 0, premium: 1, pro: 2, elite: 3 };
+const c = courses[id];
+
+if (c) {
+  document.getElementById('course-title').textContent = c.title;
+  document.getElementById('course-desc').textContent = c.desc;
+
+  const userRank = rank[user.tier || 'free'];
+  const needRank = rank[c.tier];
+
+  if (userRank >= needRank) {
+    document.getElementById('course-body').innerHTML = c.body;
+  } else {
+    document.getElementById('course-body').innerHTML =
+      '<div class="locked"><h3>🔒 Locked</h3><p>This course requires <strong>' + c.tier.toUpperCase() + '</strong>.</p><a href="pricing.html" class="btn">Upgrade</a></div>';
+  }
+} else {
+  document.getElementById('course-title').textContent = 'Course not found';
+}
+
+document.getElementById('logout').addEventListener('click', () => {
+  localStorage.removeItem('dl_user');
+  window.location.href = 'index.html';
+});
+</script>
+</body>
+</html>
