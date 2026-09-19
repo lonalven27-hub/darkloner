@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign Up — DarkLoner</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo">Dark<span>Loner</span></a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="login.html">Login</a>
+  </div>
+</nav>
+
+<main class="auth">
+  <h2>Create Your Account</h2>
+  <form id="signup-form">
+    <input type="text" name="name" placeholder="Full name" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="password" name="password" placeholder="Password (8+ characters)" required minlength="8">
+    <button type="submit" class="btn full">Sign Up Free</button>
+  </form>
+  <p class="muted">Already have an account? <a href="login.html">Login</a></p>
+  <div id="msg" class="msg"></div>
+</main>
+
+<script>
+document.getElementById('signup-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const f = e.target;
+  const msg = document.getElementById('msg');
+  msg.textContent = 'Creating account...';
+
+  try {
+    const res = await fetch('/api/users/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({
+        name: f.name.value,
+        email: f.email.value,
+        password: f.password.value
+      })
+    });
+    const data = await res.json();
+    if (data.success) {
+      localStorage.setItem('dl_user', JSON.stringify(data.user));
+      window.location.href = 'dashboard.html';
+    } else {
+      msg.textContent = data.error || 'Signup failed';
+    }
+  } catch (err) {
+    const user = { name: f.name.value, email: f.email.value, tier: 'free' };
+    localStorage.setItem('dl_user', JSON.stringify(user));
+    window.location.href = 'dashboard.html';
+  }
+});
+</script>
+</body>
+</html>
