@@ -26,22 +26,489 @@
 const params = new URLSearchParams(location.search);
 const id = params.get('id');
 const user = JSON.parse(localStorage.getItem('dl_user') || 'null');
-
 if (!user) { window.location.href = 'login.html'; }
 
 const courses = {
-  '1': { title: 'HTML & CSS Foundations', tier: 'free', desc: 'Build your first web pages.',
-    body: '<h3>Lesson 1</h3><p>HTML structures the page. CSS styles it.</p><h3>Lesson 2</h3><p>Practice: build a personal page.</p>' },
-  '2': { title: 'JavaScript Basics', tier: 'free', desc: 'Variables, functions, loops.',
-    body: '<h3>Lesson 1</h3><p>let, const, functions, arrays.</p><h3>Lesson 2</h3><p>Build a to-do app.</p>' },
-  '3': { title: 'Node.js & Backend', tier: 'premium', desc: 'Servers, APIs, databases.',
-    body: '<h3>Lesson 1</h3><p>Express server basics.</p><h3>Lesson 2</h3><p>REST API + database.</p>' },
-  '4': { title: 'Website Builder Track', tier: 'premium', desc: 'Build and launch real sites.',
-    body: '<h3>Lesson 1</h3><p>Planning a client site.</p><h3>Lesson 2</h3><p>Deploy to a real domain.</p>' },
-  '5': { title: 'Cyber Security Essentials', tier: 'pro', desc: 'Ethical hacking, defenses.',
-    body: '<h3>Lesson 1</h3><p>CIA triad, threat models.</p><h3>Lesson 2</h3><p>OWASP Top 10 walkthrough.</p>' },
-  '6': { title: 'Advanced Pentesting', tier: 'elite', desc: 'Labs, real-world scenarios.',
-    body: '<h3>Lesson 1</h3><p>Recon and enumeration.</p><h3>Lesson 2</h3><p>Reporting and remediation.</p>' }
+  '1': { title: 'HTML Foundations', tier: 'free', desc: 'Structure of every webpage.',
+    body: `
+<h3>Lesson 1 — What is HTML?</h3>
+<p>HTML (HyperText Markup Language) is the skeleton of every webpage. It uses <strong>tags</strong> like &lt;h1&gt;, &lt;p&gt;, &lt;div&gt;, &lt;a&gt; to define structure and meaning.</p>
+<p>Every HTML file starts with <code>&lt;!DOCTYPE html&gt;</code> and wraps content in <code>&lt;html&gt;</code>.</p>
+
+<h3>Lesson 2 — Document Structure</h3>
+<p>Every page has two main parts:</p>
+<p><strong>&lt;head&gt;</strong> — metadata, title, links to CSS, scripts. Not visible to user.</p>
+<p><strong>&lt;body&gt;</strong> — everything the user sees: headings, paragraphs, images, buttons.</p>
+
+<h3>Lesson 3 — Common Tags</h3>
+<p><strong>Headings:</strong> &lt;h1&gt; to &lt;h6&gt; — biggest to smallest.</p>
+<p><strong>Paragraphs:</strong> &lt;p&gt;text&lt;/p&gt;</p>
+<p><strong>Links:</strong> &lt;a href="url"&gt;click here&lt;/a&gt;</p>
+<p><strong>Images:</strong> &lt;img src="pic.jpg" alt="description"&gt;</p>
+<p><strong>Lists:</strong> &lt;ul&gt; for bullets, &lt;ol&gt; for numbers, &lt;li&gt; for items.</p>
+<p><strong>Forms:</strong> &lt;input&gt;, &lt;button&gt;, &lt;select&gt;, &lt;textarea&gt;.</p>
+
+<h3>Lesson 4 — Attributes</h3>
+<p>Attributes give tags extra info. <code>id</code> is unique. <code>class</code> groups elements. <code>href</code> links. <code>src</code> sets the source.</p>
+
+<h3>Lesson 5 — Practice</h3>
+<p>Build a personal page: heading, image, paragraph about you, link to your favorite site, and a contact form.</p>
+` },
+
+  '2': { title: 'CSS Styling', tier: 'free', desc: 'Colors, layout, responsive design.',
+    body: `
+<h3>Lesson 1 — What is CSS?</h3>
+<p>CSS (Cascading Style Sheets) controls how HTML looks. Colors, spacing, fonts, layout — all CSS.</p>
+<p>You link CSS with: <code>&lt;link rel="stylesheet" href="style.css"&gt;</code> inside &lt;head&gt;.</p>
+
+<h3>Lesson 2 — Selectors</h3>
+<p><strong>Tag:</strong> <code>p { color: red; }</code></p>
+<p><strong>Class:</strong> <code>.btn { padding: 10px; }</code> (use <code>class="btn"</code>)</p>
+<p><strong>ID:</strong> <code>#header { height: 60px; }</code> (use <code>id="header"</code>)</p>
+
+<h3>Lesson 3 — Box Model</h3>
+<p>Every element is a box: <strong>content</strong> → <strong>padding</strong> (space inside) → <strong>border</strong> → <strong>margin</strong> (space outside).</p>
+<p>Set with: <code>padding: 1rem; margin: 2rem;</code></p>
+
+<h3>Lesson 4 — Flexbox & Grid</h3>
+<p><strong>Flex:</strong> <code>display:flex; justify-content:center; align-items:center;</code> — one direction.</p>
+<p><strong>Grid:</strong> <code>display:grid; grid-template-columns: 1fr 1fr 1fr;</code> — rows and columns.</p>
+
+<h3>Lesson 5 — Colors & Fonts</h3>
+<p>Colors: <code>#4ade80</code> (hex), <code>rgb(74, 222, 128)</code>, <code>red</code> (name).</p>
+<p>Fonts: <code>font-family: system-ui, sans-serif; font-size: 16px; font-weight: bold;</code></p>
+
+<h3>Lesson 6 — Responsive Design</h3>
+<p>Media queries change styles based on screen size:</p>
+<p><code>@media (max-width: 600px) { nav { flex-direction: column; } }</code></p>
+
+<h3>Lesson 7 — Practice</h3>
+<p>Take your HTML personal page and add: dark background, green accent color, centered layout, and mobile-friendly menu.</p>
+` },
+
+  '3': { title: 'JavaScript Basics', tier: 'free', desc: 'Variables, functions, loops.',
+    body: `
+<h3>Lesson 1 — What is JavaScript?</h3>
+<p>JavaScript runs in the browser and makes pages interactive. It handles clicks, form submissions, animations, API calls.</p>
+<p>Add it with: <code>&lt;script src="app.js"&gt;&lt;/script&gt;</code> before &lt;/body&gt;.</p>
+
+<h3>Lesson 2 — Variables</h3>
+<p><code>let name = "DarkLoner";</code> — can change later.</p>
+<p><code>const PI = 3.14;</code> — cannot change.</p>
+<p><code>var</code> is old — don't use it.</p>
+
+<h3>Lesson 3 — Data Types</h3>
+<p>String: <code>"hello"</code> · Number: <code>42</code> · Boolean: <code>true</code> · Array: <code>[1, 2, 3]</code> · Object: <code>{ name: "Lisa", age: 19 }</code></p>
+
+<h3>Lesson 4 — Functions</h3>
+<p><code>function greet(name) { return "Hi " + name; }</code></p>
+<p>Arrow version: <code>const greet = (name) => "Hi " + name;</code></p>
+
+<h3>Lesson 5 — Loops</h3>
+<p><strong>For:</strong> <code>for (let i = 0; i < 5; i++) { console.log(i); }</code></p>
+<p><strong>ForEach:</strong> <code>[1,2,3].forEach(n => console.log(n));</code></p>
+<p><strong>While:</strong> <code>while (x < 10) { x++; }</code></p>
+
+<h3>Lesson 6 — Conditionals</h3>
+<p><code>if (age >= 18) { console.log("adult"); } else { console.log("minor"); }</code></p>
+
+<h3>Lesson 7 — Practice</h3>
+<p>Build a to-do app: input field, "Add" button, list below. When you tap Add, the task appears. When you tap a task, it disappears.</p>
+` },
+
+  '4': { title: 'DOM & Events', tier: 'free', desc: 'Make pages interactive.',
+    body: `
+<h3>Lesson 1 — What is the DOM?</h3>
+<p>The DOM (Document Object Model) is the browser's live representation of your HTML. JavaScript can read and change it in real time.</p>
+
+<h3>Lesson 2 — Selecting Elements</h3>
+<p><code>document.getElementById("myId")</code></p>
+<p><code>document.querySelector(".myClass")</code> — first match</p>
+<p><code>document.querySelectorAll("p")</code> — all matches</p>
+
+<h3>Lesson 3 — Changing Content</h3>
+<p><code>element.textContent = "New text";</code></p>
+<p><code>element.innerHTML = "&lt;b&gt;Bold&lt;/b&gt;";</code></p>
+<p><code>element.style.color = "red";</code></p>
+<p><code>element.classList.add("active");</code></p>
+
+<h3>Lesson 4 — Events</h3>
+<p><code>button.addEventListener("click", () => { alert("clicked"); });</code></p>
+<p>Common events: <code>click</code>, <code>input</code>, <code>submit</code>, <code>keydown</code>, <code>scroll</code>.</p>
+
+<h3>Lesson 5 — Forms</h3>
+<p><code>form.addEventListener("submit", (e) => { e.preventDefault(); ... });</code></p>
+<p><code>e.preventDefault()</code> stops the page from reloading.</p>
+
+<h3>Lesson 6 — Practice</h3>
+<p>Build a button that changes the page background color when clicked. Then make it cycle through 3 colors on each click.</p>
+` },
+
+  '5': { title: 'Git & GitHub', tier: 'free', desc: 'Version control for everyone.',
+    body: `
+<h3>Lesson 1 — What is Git?</h3>
+<p>Git tracks changes to your code. Every save is a "commit". You can go back, compare, branch off, and collaborate.</p>
+
+<h3>Lesson 2 — Basic Commands</h3>
+<p><code>git init</code> — start a new repo</p>
+<p><code>git add .</code> — stage all changes</p>
+<p><code>git commit -m "message"</code> — save snapshot</p>
+<p><code>git push</code> — send to GitHub</p>
+<p><code>git pull</code> — get latest from remote</p>
+
+<h3>Lesson 3 — Branches</h3>
+<p>Branches let you work on features without breaking main.</p>
+<p><code>git checkout -b new-feature</code> — create + switch</p>
+<p><code>git checkout main</code> — back to main</p>
+<p><code>git merge new-feature</code> — merge into main</p>
+
+<h3>Lesson 4 — GitHub</h3>
+<p>GitHub hosts your repos online. Push code, collaborate, deploy, share.</p>
+<p>Netlify, Vercel, and Render all pull from GitHub to deploy.</p>
+
+<h3>Lesson 5 — Pull Requests</h3>
+<p>PR = "please review my branch and merge it". Standard workflow on teams.</p>
+
+<h3>Lesson 6 — Practice</h3>
+<p>Create a new repo, add a README, commit, push. Then clone it on another device and make a change, commit, push.</p>
+` },
+
+  '6': { title: 'Node.js & Express', tier: 'premium', desc: 'Build real backends.',
+    body: `
+<h3>Lesson 1 — What is Node?</h3>
+<p>Node lets you run JavaScript on the server — outside the browser. Same language, different environment.</p>
+<p>Download from <code>nodejs.org</code>. Check with <code>node -v</code>.</p>
+
+<h3>Lesson 2 — NPM</h3>
+<p>NPM is Node's package manager. <code>npm init -y</code> creates package.json. <code>npm install express</code> adds a library.</p>
+
+<h3>Lesson 3 — First Server</h3>
+<p><code>const express = require('express');</code></p>
+<p><code>const app = express();</code></p>
+<p><code>app.get('/', (req, res) => res.send('hi'));</code></p>
+<p><code>app.listen(3000);</code></p>
+
+<h3>Lesson 4 — Routes</h3>
+<p><code>app.get('/users', ...)</code> — list users</p>
+<p><code>app.post('/users', ...)</code> — create user</p>
+<p><code>app.put('/users/:id', ...)</code> — update</p>
+<p><code>app.delete('/users/:id', ...)</code> — delete</p>
+
+<h3>Lesson 5 — Middleware</h3>
+<p>Functions between request and response: <code>app.use(express.json());</code> parses JSON bodies.</p>
+<p>Custom middleware: <code>app.use((req, res, next) => { console.log(req.url); next(); });</code></p>
+
+<h3>Lesson 6 — Deploy</h3>
+<p>Push to GitHub, deploy on Render / Railway / Fly.io. Server runs 24/7, reachable from anywhere.</p>
+
+<h3>Lesson 7 — Practice</h3>
+<p>Build a simple API: /courses returns a list, /courses/:id returns one course, POST /courses adds one.</p>
+` },
+
+  '7': { title: 'Databases & SQL', tier: 'premium', desc: 'Store and query data.',
+    body: `
+<h3>Lesson 1 — Why Databases?</h3>
+<p>Files don't scale. Databases handle millions of records, concurrent users, and complex queries fast.</p>
+
+<h3>Lesson 2 — SQL Basics</h3>
+<p><code>SELECT * FROM users;</code> — all users</p>
+<p><code>INSERT INTO users (name, email) VALUES ('Lisa', 'l@x.com');</code></p>
+<p><code>UPDATE users SET name = 'New' WHERE id = 1;</code></p>
+<p><code>DELETE FROM users WHERE id = 1;</code></p>
+
+<h3>Lesson 3 — WHERE, ORDER, LIMIT</h3>
+<p><code>SELECT * FROM courses WHERE tier = 'free' ORDER BY title LIMIT 10;</code></p>
+
+<h3>Lesson 4 — Joins</h3>
+<p><code>SELECT u.name, c.title FROM users u JOIN courses c ON c.user_id = u.id;</code></p>
+
+<h3>Lesson 5 — Schema Design</h3>
+<p>Tables, columns, types (INTEGER, TEXT, DATETIME), primary keys (unique id), foreign keys (references).</p>
+
+<h3>Lesson 6 — SQLite vs Postgres</h3>
+<p>SQLite: single file, perfect for local dev and small apps.</p>
+<p>Postgres: production-grade, handles heavy traffic, concurrent writes, replicas.</p>
+
+<h3>Lesson 7 — Practice</h3>
+<p>Design a schema for DarkLoner: users, courses, enrollments. Write queries to list all courses per user.</p>
+` },
+
+  '8': { title: 'REST APIs', tier: 'premium', desc: 'Connect frontend to backend.',
+    body: `
+<h3>Lesson 1 — What is REST?</h3>
+<p>REST is a convention for building APIs. Every URL represents a resource. HTTP methods describe actions.</p>
+
+<h3>Lesson 2 — HTTP Methods</h3>
+<p><code>GET /courses</code> — read list</p>
+<p><code>GET /courses/1</code> — read one</p>
+<p><code>POST /courses</code> — create</p>
+<p><code>PUT /courses/1</code> — replace</p>
+<p><code>PATCH /courses/1</code> — partial update</p>
+<p><code>DELETE /courses/1</code> — remove</p>
+
+<h3>Lesson 3 — JSON</h3>
+<p>APIs exchange JSON. <code>{ "id": 1, "title": "HTML" }</code></p>
+<p>Send with: <code>fetch('/api/courses', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data) })</code></p>
+
+<h3>Lesson 4 — Status Codes</h3>
+<p>200 OK · 201 Created · 400 Bad Request · 401 Unauthorized · 403 Forbidden · 404 Not Found · 500 Server Error.</p>
+
+<h3>Lesson 5 — Auth</h3>
+<p>APIs protect routes with tokens: <code>Authorization: Bearer TOKEN</code></p>
+
+<h3>Lesson 6 — Practice</h3>
+<p>Build a REST API for a to-do app: GET /todos, POST /todos, DELETE /todos/:id. Test with Postman or curl.</p>
+` },
+
+  '9': { title: 'Website Builder Track', tier: 'premium', desc: 'Build & launch client sites.',
+    body: `
+<h3>Lesson 1 — The Client Brief</h3>
+<p>Before you touch code, ask: What's the goal? Who's the audience? What's the deadline? What's the budget? What pages do they need?</p>
+
+<h3>Lesson 2 — Wireframe</h3>
+<p>Sketch on paper first. Mobile layout, then desktop. Get approval before writing a single line of code.</p>
+
+<h3>Lesson 3 — Choose Your Stack</h3>
+<p>Simple site? HTML/CSS/JS. Blog? Astro or Next.js. E-commerce? Shopify. Dashboard? React + Node.</p>
+
+<h3>Lesson 4 — Build</h3>
+<p>Start with structure (HTML), then style (CSS), then interactivity (JS). Test on real devices as you go.</p>
+
+<h3>Lesson 5 — Deploy</h3>
+<p>Netlify for static sites. Vercel for Next.js. Render for Node backends. Custom domain from Namecheap or Cloudflare.</p>
+
+<h3>Lesson 6 — Handoff</h3>
+<p>Give the client: admin access, documentation, training video, support contact. Charge for maintenance or don't.</p>
+
+<h3>Lesson 7 — Pricing Your Work</h3>
+<p>Simple site: $200–$800. Business site: $800–$3,000. Web app: $3,000+. Always take 50% upfront.</p>
+
+<h3>Lesson 8 — Practice</h3>
+<p>Build a fake portfolio site for a local business. Deploy it. Add it to your portfolio as a case study.</p>
+` },
+
+  '10': { title: 'Authentication & Security', tier: 'premium', desc: 'Sessions, JWT, hashing.',
+    body: `
+<h3>Lesson 1 — Password Hashing</h3>
+<p>Never store plain passwords. Hash with bcrypt:</p>
+<p><code>const hash = await bcrypt.hash(password, 10);</code></p>
+<p>Verify: <code>await bcrypt.compare(attempt, hash);</code></p>
+
+<h3>Lesson 2 — Sessions</h3>
+<p>Server stores session ID. Browser stores cookie. On each request, server checks the cookie against its session store.</p>
+
+<h3>Lesson 3 — JWT (JSON Web Tokens)</h3>
+<p>Self-contained tokens. Server signs a token with a secret. Client sends it back on each request. Server verifies signature.</p>
+<p><code>jwt.sign({ id: user.id }, SECRET, { expiresIn: '7d' })</code></p>
+
+<h3>Lesson 4 — Cookies vs localStorage</h3>
+<p>Cookies: sent automatically, can be httpOnly (safer against XSS). localStorage: not sent automatically, readable by JS (vulnerable).</p>
+
+<h3>Lesson 5 — Common Mistakes</h3>
+<p>Storing tokens in localStorage. No rate limiting on login. Weak JWT secrets. No HTTPS. Exposing user IDs in URLs.</p>
+
+<h3>Lesson 6 — 2FA (Two-Factor Auth)</h3>
+<p>Something you know (password) + something you have (phone/app). TOTP apps like Google Authenticator.</p>
+
+<h3>Lesson 7 — Practice</h3>
+<p>Build signup + login for a to-do app. Hash passwords with bcrypt. Use JWT for sessions. Protect /todos routes with middleware.</p>
+` },
+
+  '11': { title: 'Cyber Security Essentials', tier: 'pro', desc: 'CIA triad, threat modeling, OWASP.',
+    body: `
+<h3>Lesson 1 — The CIA Triad</h3>
+<p><strong>Confidentiality</strong> — only authorized users see data. <strong>Integrity</strong> — data isn't tampered with. <strong>Availability</strong> — systems stay up for legitimate users.</p>
+
+<h3>Lesson 2 — Threat Modeling</h3>
+<p>Who would attack you? Why? What's their access? What's the impact? Map it out on paper before you defend.</p>
+
+<h3>Lesson 3 — Attack Surfaces</h3>
+<p>Every input, API, login form, file upload, third-party script is an attack surface. Reduce, harden, monitor.</p>
+
+<h3>Lesson 4 — OWASP Top 10</h3>
+<p>1. Broken Access Control · 2. Cryptographic Failures · 3. Injection · 4. Insecure Design · 5. Security Misconfiguration · 6. Vulnerable Components · 7. Auth Failures · 8. Data Integrity Failures · 9. Logging Failures · 10. SSRF</p>
+
+<h3>Lesson 5 — Defense in Depth</h3>
+<p>Multiple layers: firewall, WAF, MFA, patching, backups, logging, monitoring, incident response, employee training.</p>
+
+<h3>Lesson 6 — Practice</h3>
+<p>Take a website you built. Walk through OWASP Top 10 and mark which ones it's vulnerable to. Fix one.</p>
+` },
+
+  '12': { title: 'Network Fundamentals', tier: 'pro', desc: 'TCP/IP, DNS, HTTP, firewalls.',
+    body: `
+<h3>Lesson 1 — The OSI Model</h3>
+<p>7 layers: Physical → Data Link → Network → Transport → Session → Presentation → Application. Each handles a specific job.</p>
+
+<h3>Lesson 2 — TCP/IP</h3>
+<p>TCP is reliable (handshake, ordering, retransmit). UDP is fast and lossy (video, games, DNS).</p>
+<p>IP routes packets between networks. IPv4: 192.168.1.1. IPv6: longer, newer.</p>
+
+<h3>Lesson 3 — DNS</h3>
+<p>Domain Name System turns names into IPs. <code>darkloner.com</code> → <code>76.76.21.21</code>. Records: A, AAAA, CNAME, MX, TXT.</p>
+
+<h3>Lesson 4 — HTTP/HTTPS</h3>
+<p>HTTP is the web's language. HTTPS wraps it in TLS encryption. Always use HTTPS.</p>
+
+<h3>Lesson 5 — Ports & Services</h3>
+<p>22 SSH · 80 HTTP · 443 HTTPS · 3306 MySQL · 5432 Postgres. Know what's open on your server.</p>
+
+<h3>Lesson 6 — Firewalls & Proxies</h3>
+<p>Firewalls filter traffic by rule. Proxies hide identity or route traffic. Reverse proxies (nginx) sit in front of servers.</p>
+
+<h3>Lesson 7 — Practice</h3>
+<p>Run <code>nslookup darkloner.com</code> and <code>ping darkloner.com</code>. Read the output. Understand what each line means.</p>
+` },
+
+  '13': { title: 'Ethical Hacking Basics', tier: 'pro', desc: 'Recon, scanning, exploitation.',
+    body: `
+<h3>Lesson 1 — Rules of Engagement</h3>
+<p>Only test systems you own or have written permission for. Get scope in writing. Never touch production data.</p>
+
+<h3>Lesson 2 — Passive Recon</h3>
+<p>OSINT: WHOIS, Shodan, dnsdumpster, LinkedIn, Google dorks, certificate transparency logs.</p>
+
+<h3>Lesson 3 — Active Recon</h3>
+<p>nmap for port scans. Banner grabbing for service versions. Directory busting with gobuster or feroxbuster.</p>
+
+<h3>Lesson 4 — Vulnerability Scanning</h3>
+<p>Nessus, OpenVAS, Nikto. Automated tools flag potential issues. Manual verification is required.</p>
+
+<h3>Lesson 5 — Exploitation</h3>
+<p>Match vulnerability to exploit. Test in scope. Document proof. Never exceed your authorization.</p>
+
+<h3>Lesson 6 — Reporting</h3>
+<p>Executive summary (business impact), technical findings (CVSS scores), reproduction steps, remediation advice.</p>
+
+<h3>Lesson 7 — Practice</h3>
+<p>Set up a vulnerable VM (DVWA, Metasploitable) in a local lab. Practice recon and exploitation legally.</p>
+` },
+
+  '14': { title: 'Web App Pentesting', tier: 'pro', desc: 'SQLi, XSS, CSRF, IDOR.',
+    body: `
+<h3>Lesson 1 — SQL Injection</h3>
+<p>User input reaches a SQL query unchecked. <code>' OR 1=1 --</code> bypasses login. Fix: parameterized queries.</p>
+
+<h3>Lesson 2 — XSS (Cross-Site Scripting)</h3>
+<p>Injected JavaScript runs in another user's browser. Steals cookies, hijacks sessions. Fix: escape output, sanitize input, CSP.</p>
+
+<h3>Lesson 3 — CSRF</h3>
+<p>Trick a logged-in user into making an unwanted request. Fix: CSRF tokens, SameSite cookies.</p>
+
+<h3>Lesson 4 — IDOR</h3>
+<p>Change /user/123 to /user/124 and see someone else's data. Fix: server checks ownership on every request.</p>
+
+<h3>Lesson 5 — File Uploads</h3>
+<p>Unrestricted file upload = remote code execution. Fix: whitelist extensions, rename files, store outside webroot.</p>
+
+<h3>Lesson 6 — SSRF</h3>
+<p>Server fetches a URL the attacker controls, hits internal services. Fix: whitelist allowed hosts.</p>
+
+<h3>Lesson 7 — Practice</h3>
+<p>Use PortSwigger Web Security Academy labs. Solve 5 labs minimum. All free, all legal.</p>
+` },
+
+  '15': { title: 'Advanced Pentesting', tier: 'elite', desc: 'Labs, real-world scenarios.',
+    body: `
+<h3>Lesson 1 — Enumeration Deep Dive</h3>
+<p>Users, shares, services, versions, patches. Every detail is a lead. Enumeration is 80% of the work.</p>
+
+<h3>Lesson 2 — Privilege Escalation (Linux)</h3>
+<p>Check sudo rights, SUID binaries, cron jobs, writable files, kernel version. Tools: linpeas, linux-exploit-suggester.</p>
+
+<h3>Lesson 3 — Privilege Escalation (Windows)</h3>
+<p>Token impersonation, unquoted service paths, weak service permissions, always-install-elevated. Tools: winpeas, PowerUp.</p>
+
+<h3>Lesson 4 — Lateral Movement</h3>
+<p>Pivot from one machine to another. Pass-the-hash, kerberoasting, SMB, WMI, WinRM.</p>
+
+<h3>Lesson 5 — Persistence</h3>
+<p>Maintain access through reboots. Scheduled tasks, registry run keys, SSH keys, service accounts.</p>
+
+<h3>Lesson 6 — C2 Infrastructure</h3>
+<p>Command & control servers. Cobalt Strike, Sliver, Mythic. Redirectors, domain fronting, Malleable C2 profiles.</p>
+
+<h3>Lesson 7 — Reporting</h3>
+<p>Timeline of the attack, evidence, blue team feedback, remediation. Tell the story.</p>
+
+<h3>Lesson 8 — Practice</h3>
+<p>HackTheBox and TryHackMe Pro Labs. Full-scope challenges that simulate real intrusions.</p>
+` },
+
+  '16': { title: 'Malware Analysis', tier: 'elite', desc: 'Understand and defend.',
+    body: `
+<h3>Lesson 1 — Types of Malware</h3>
+<p>Viruses (attach to files), worms (self-spread), trojans (disguised), ransomware (encrypts), rootkits (hide), RATs (remote control).</p>
+
+<h3>Lesson 2 — Static Analysis</h3>
+<p>Examine without running. <code>strings</code>, PE headers, imports, sections. Tools: PEStudio, Detect It Easy, Ghidra.</p>
+
+<h3>Lesson 3 — Dynamic Analysis</h3>
+<p>Run in a sandbox. Monitor processes, network traffic, registry, file system. Tools: Cuckoo, ANY.RUN, Procmon, Wireshark.</p>
+
+<h3>Lesson 4 — Code Analysis</h3>
+<p>Disassemble with Ghidra or IDA. Follow the logic. Identify the malicious behavior.</p>
+
+<h3>Lesson 5 — Obfuscation & Packing</h3>
+<p>Malware hides behind packers, crypters, base64, XOR. Unpack with UPX, identify layers.</p>
+
+<h3>Lesson 6 — Detection</h3>
+<p>Signatures (YARA), behavior rules, EDR. Write a YARA rule that catches your sample.</p>
+
+<h3>Lesson 7 — Practice</h3>
+<p>Download samples from MalwareBazaar (safe, in a VM). Analyze 3 samples. Write reports.</p>
+` },
+
+  '17': { title: 'Reverse Engineering', tier: 'elite', desc: 'Disassembly & debugging.',
+    body: `
+<h3>Lesson 1 — Why Reverse Engineer?</h3>
+<p>Understand malware, audit closed-source, find vulnerabilities, crack CTFs, learn how things work.</p>
+
+<h3>Lesson 2 — Assembly Basics</h3>
+<p>Registers: RAX, RBX, RCX, RDX. Stack: RSP, RBP. Instructions: MOV, PUSH, POP, CALL, JMP, CMP, JE, JNE.</p>
+
+<h3>Lesson 3 — Tools</h3>
+<p>Ghidra (free, NSA), IDA Free, x64dbg, radare2, Binary Ninja. Start with Ghidra.</p>
+
+<h3>Lesson 4 — Patterns</h3>
+<p>Loops look like backward jumps. Conditionals look like CMP + JE/JNE. Function calls are CALL instructions.</p>
+
+<h3>Lesson 5 — Dynamic Analysis</h3>
+<p>Run under a debugger. Set breakpoints. Step through. Watch memory.</p>
+
+<h3>Lesson 6 — Crackmes</h3>
+<p>Small challenges designed for practice. Start with crackmes.one. Solve 10 beginner ones.</p>
+
+<h3>Lesson 7 — Practice</h3>
+<p>Solve a crackme. Patch it so any password works. Then bypass the check entirely.</p>
+` },
+
+  '18': { title: 'Red Team Operations', tier: 'elite', desc: 'Full-scope adversary simulation.',
+    body: `
+<h3>Lesson 1 — Planning</h3>
+<p>Scope, rules of engagement, comms plan, reporting structure, emergency stop conditions. Get everything in writing.</p>
+
+<h3>Lesson 2 — Initial Access</h3>
+<p>Phishing, exposed services, supply chain, physical, credential stuffing. Red team's first foothold.</p>
+
+<h3>Lesson 3 — C2 Infrastructure</h3>
+<p>Command & control channels. Redirectors hide the real C2. Domain fronting blends with legitimate traffic.</p>
+
+<h3>Lesson 4 — Evasion</h3>
+<p>AV/EDR bypass techniques. Living-off-the-land binaries (LOLBins). Signed binary proxy execution. AMSI bypass.</p>
+
+<h3>Lesson 5 — Post-Exploitation</h3>
+<p>Credential harvesting, lateral movement, persistence, data exfiltration, cleanup.</p>
+
+<h3>Lesson 6 — OpSec</h3>
+<p>Every action leaves a trace. Know what you're leaving. Clean up. Don't get caught by the blue team.</p>
+
+<h3>Lesson 7 — Reporting</h3>
+<p>Executive summary, timeline, evidence, blue team feedback, remediation. Tell the story of the attack.</p>
+
+<h3>Lesson 8 — Practice</h3>
+<p>TryHackMe Red Team path. HackTheBox Pro Labs. Full-scope simulations.</p>
+` }
 };
 
 const rank = { free: 0, premium: 1, pro: 2, elite: 3 };
@@ -50,10 +517,8 @@ const c = courses[id];
 if (c) {
   document.getElementById('course-title').textContent = c.title;
   document.getElementById('course-desc').textContent = c.desc;
-
   const userRank = rank[user.tier || 'free'];
   const needRank = rank[c.tier];
-
   if (userRank >= needRank) {
     document.getElementById('course-body').innerHTML = c.body;
   } else {
