@@ -1,0 +1,204 @@
+{
+  "courses": [
+    { "id": 1, "title": "HTML Foundations", "category": "Web", "tier": "free", "desc": "Structure every webpage.",
+      "lessons": [
+        { "title": "What is HTML?", "body": "HTML (HyperText Markup Language) is the skeleton of the web. It uses tags like <h1>, <p>, <div>, and <a> to define structure. Every page starts with <!DOCTYPE html> and wraps content in <html>." },
+        { "title": "Document Structure", "body": "Every page has <head> (metadata, title, CSS links) and <body> (what users see). The head is invisible; the body is everything." },
+        { "title": "Headings & Paragraphs", "body": "Use <h1> through <h6> for headings — h1 is biggest. Wrap text in <p> for paragraphs. Browsers add spacing automatically." },
+        { "title": "Links & Images", "body": "Links: <a href=\"https://x.com\">click</a>. Images: <img src=\"pic.jpg\" alt=\"description\">. The alt text describes the image for accessibility." },
+        { "title": "Lists & Tables", "body": "Unordered list: <ul><li>item</li></ul>. Ordered: <ol>. Tables: <table><tr><td>cell</td></tr></table>. Use for structured data only." },
+        { "title": "Forms & Inputs", "body": "Forms collect user input. <form><input type=\"text\"><button>Submit</button></form>. Input types: text, email, password, number, checkbox, radio." }
+      ]
+    },
+    { "id": 2, "title": "CSS Styling", "category": "Web", "tier": "free", "desc": "Colors, layout, responsive design.",
+      "lessons": [
+        { "title": "What is CSS?", "body": "CSS (Cascading Style Sheets) controls how HTML looks. Link it via <link rel=\"stylesheet\" href=\"style.css\"> in the head." },
+        { "title": "Selectors", "body": "Tag: p { color: red; }. Class: .btn { padding: 10px; }. ID: #header { height: 60px; }. Classes are reusable; IDs must be unique." },
+        { "title": "Box Model", "body": "Every element is a box: content → padding (inside space) → border → margin (outside space). Understand this and layout becomes easy." },
+        { "title": "Flexbox", "body": "display: flex turns a container into a flexible row or column. justify-content: center centers horizontally. align-items: center centers vertically." },
+        { "title": "Grid", "body": "display: grid; grid-template-columns: 1fr 1fr 1fr creates 3 equal columns. Grid is best for full page layouts." },
+        { "title": "Responsive Design", "body": "@media (max-width: 600px) { nav { flex-direction: column; } } — media queries change styles based on screen size." }
+      ]
+    },
+    { "id": 3, "title": "JavaScript Basics", "category": "Web", "tier": "free", "desc": "Variables, functions, loops.",
+      "lessons": [
+        { "title": "What is JavaScript?", "body": "JavaScript makes pages interactive. It handles clicks, form submissions, animations, and API calls. Add via <script src=\"app.js\"></script>." },
+        { "title": "Variables", "body": "let name = \"Lisa\"; (changeable). const PI = 3.14; (fixed). var is old — don't use it." },
+        { "title": "Data Types", "body": "String: \"hello\". Number: 42. Boolean: true. Array: [1,2,3]. Object: { name: \"Lisa\", age: 19 }. Null and undefined are empty values." },
+        { "title": "Functions", "body": "function greet(name) { return \"Hi \" + name; }. Arrow version: const greet = (name) => \"Hi \" + name. Functions are reusable logic blocks." },
+        { "title": "Loops", "body": "for (let i = 0; i < 5; i++) { console.log(i); }. Also: forEach, map, filter, while, do-while." },
+        { "title": "Conditionals", "body": "if (age >= 18) { adult(); } else if (age >= 13) { teen(); } else { child(); }. Switch statements handle many cases cleanly." }
+      ]
+    },
+    { "id": 4, "title": "DOM & Events", "category": "Web", "tier": "free", "desc": "Make pages interactive.",
+      "lessons": [
+        { "title": "What is the DOM?", "body": "The DOM (Document Object Model) is the browser's live tree of your HTML. JavaScript can read and change it in real time." },
+        { "title": "Selecting Elements", "body": "document.getElementById(\"id\") — by id. document.querySelector(\".class\") — first match. document.querySelectorAll(\"p\") — all paragraphs." },
+        { "title": "Changing Content", "body": "element.textContent = \"new\"; element.innerHTML = \"<b>bold</b>\"; element.style.color = \"red\"; element.classList.add(\"active\");" },
+        { "title": "Events", "body": "button.addEventListener(\"click\", () => { alert(\"hi\"); });. Common events: click, input, submit, keydown, scroll, focus, blur." },
+        { "title": "Forms & preventDefault", "body": "form.addEventListener(\"submit\", (e) => { e.preventDefault(); const data = new FormData(form); });. preventDefault stops page reload." },
+        { "title": "Practice Project", "body": "Build a to-do app: input field, add button, list. Click adds a task. Click on task removes it. Save tasks to localStorage so they persist." }
+      ]
+    },
+    { "id": 5, "title": "Git & GitHub", "category": "Tools", "tier": "free", "desc": "Version control.",
+      "lessons": [
+        { "title": "What is Git?", "body": "Git tracks every change to your code. Each save is a commit. You can rewind, compare, branch off, and collaborate without breaking main." },
+        { "title": "Setup", "body": "Install from git-scm.com. Set identity: git config --global user.name \"Your Name\" and git config --global user.email \"you@x.com\"." },
+        { "title": "Basic Commands", "body": "git init (start repo). git add . (stage all). git commit -m \"msg\" (save). git push (upload). git pull (download). git status (see state)." },
+        { "title": "Branches", "body": "git checkout -b feature (create + switch). git checkout main (back). git merge feature (combine). Branches let you work safely." },
+        { "title": "GitHub", "body": "GitHub hosts repos online. Create repo → connect with git remote add origin URL → git push -u origin main. All deploy platforms pull from GitHub." },
+        { "title": "Pull Requests", "body": "A PR is 'please review my branch'. Standard on teams. Reviewers comment, request changes, then merge." }
+      ]
+    },
+    { "id": 6, "title": "Node.js & Express", "category": "Backend", "tier": "premium", "desc": "Build real backends.",
+      "lessons": [
+        { "title": "What is Node?", "body": "Node lets you run JavaScript on the server — outside the browser. Same language, different environment. Download from nodejs.org. Check: node -v." },
+        { "title": "NPM", "body": "NPM is Node's package manager. npm init -y creates package.json. npm install express adds a library. node_modules holds installed packages." },
+        { "title": "First Server", "body": "const express = require('express'); const app = express(); app.get('/', (req, res) => res.send('hi')); app.listen(3000);" },
+        { "title": "Routes", "body": "app.get('/users') lists. app.post('/users') creates. app.put('/users/:id') updates. app.delete('/users/:id') removes. REST convention." },
+        { "title": "Middleware", "body": "app.use(express.json()) parses JSON bodies. Custom: app.use((req,res,next) => { console.log(req.url); next(); }). Runs before routes." },
+        { "title": "Deploy", "body": "Push to GitHub. Deploy on Render, Railway, Fly.io, or Koyeb. Server runs 24/7 reachable from anywhere. Set env vars for secrets." }
+      ]
+    },
+    { "id": 7, "title": "Python Programming", "category": "Language", "tier": "free", "desc": "From zero to automation.",
+      "lessons": [
+        { "title": "What is Python?", "body": "Python is a readable, general-purpose language used for web, data, automation, AI, and scripting. Install from python.org. Check: python --version." },
+        { "title": "Variables & Types", "body": "name = \"Lisa\". age = 19. pi = 3.14. active = True. items = [1,2,3]. person = {\"name\": \"Lisa\"}. Python is dynamically typed." },
+        { "title": "Control Flow", "body": "if age >= 18: print(\"adult\"). else: print(\"minor\"). Indentation matters. for i in range(5): print(i). while x < 10: x += 1." },
+        { "title": "Functions", "body": "def greet(name): return f\"Hi {name}\". f-strings format values inline. Default args: def greet(name=\"world\"):. Return multiple: return a, b." },
+        { "title": "Files & Modules", "body": "with open('file.txt', 'r') as f: content = f.read(). Import: import os, sys, json, requests. Install packages: pip install requests." },
+        { "title": "Practice", "body": "Build a script that reads a CSV of names, filters by age > 30, and writes the result to a new CSV. Real automation skill." }
+      ]
+    },
+    { "id": 8, "title": "SQL Databases", "category": "Database", "tier": "premium", "desc": "Store & query data.",
+      "lessons": [
+        { "title": "Why Databases?", "body": "Files don't scale. Databases handle millions of records, concurrent users, and fast queries with indexes." },
+        { "title": "Tables & Rows", "body": "A database has tables. A table has columns (fields) and rows (records). Primary key = unique id per row. Foreign key = reference to another table." },
+        { "title": "SELECT", "body": "SELECT * FROM users; (all). SELECT name, email FROM users WHERE age > 18; (filtered). SELECT COUNT(*) FROM users; (count)." },
+        { "title": "INSERT / UPDATE / DELETE", "body": "INSERT INTO users (name, email) VALUES ('Lisa', 'l@x.com');. UPDATE users SET name='New' WHERE id=1;. DELETE FROM users WHERE id=1;." },
+        { "title": "JOINs", "body": "SELECT u.name, c.title FROM users u JOIN courses c ON c.user_id = u.id;. JOIN links data across tables by a shared column." },
+        { "title": "Postgres vs SQLite", "body": "SQLite: single file, zero setup, great for dev and small apps. Postgres: production-grade, handles heavy traffic, concurrent writes, replicas." }
+      ]
+    },
+    { "id": 9, "title": "Linux Essentials", "category": "Systems", "tier": "pro", "desc": "Command line mastery.",
+      "lessons": [
+        { "title": "What is Linux?", "body": "Linux is a free, open-source OS powering most servers, Android, and cloud. Learn it and you control any server you'll ever touch." },
+        { "title": "File System", "body": "/ is root. /home/user for user files. /etc for configs. /var for logs. /tmp for temp. /usr for programs. Everything is a file." },
+        { "title": "Navigation", "body": "pwd (where am I). ls -la (list all). cd /path (change). mkdir new (create folder). rm -rf dir (delete — dangerous!). cp, mv, touch." },
+        { "title": "File Operations", "body": "cat file (view). less file (scroll). head/tail (first/last lines). grep 'text' file (search). chmod 755 file (permissions). chown user file." },
+        { "title": "Processes", "body": "ps aux (list processes). top (live monitor). kill PID (stop). kill -9 PID (force). nohup cmd & (background). systemctl start/stop/status service." },
+        { "title": "Package Management", "body": "Debian/Ubuntu: apt update && apt install pkg. Red Hat/CentOS: yum install pkg. Arch: pacman -S pkg." }
+      ]
+    },
+    { "id": 10, "title": "Networking Fundamentals", "category": "Security", "tier": "pro", "desc": "TCP/IP, DNS, HTTP.",
+      "lessons": [
+        { "title": "OSI Model", "body": "7 layers: Physical, Data Link, Network, Transport, Session, Presentation, Application. Each handles a specific job in getting data across." },
+        { "title": "TCP vs UDP", "body": "TCP is reliable — handshake, ordering, retransmit. UDP is fast and lossy — video, games, DNS. TCP for correctness, UDP for speed." },
+        { "title": "IP Addresses", "body": "IPv4: 192.168.1.1. IPv6: longer hex format. Private ranges: 10.x, 172.16-31.x, 192.168.x. Public addresses route on the internet." },
+        { "title": "DNS", "body": "DNS turns names into IPs. darkloner.com → 76.76.21.21. Records: A (IPv4), AAAA (IPv6), CNAME (alias), MX (mail), TXT (verification)." },
+        { "title": "HTTP/HTTPS", "body": "HTTP is the web's language: GET, POST, PUT, DELETE. HTTPS wraps it in TLS encryption. Never run production without HTTPS." },
+        { "title": "Ports", "body": "22 SSH · 25 SMTP · 53 DNS · 80 HTTP · 443 HTTPS · 3306 MySQL · 5432 Postgres. Know what's open on your systems." }
+      ]
+    },
+    { "id": 11, "title": "Ethical Hacking Intro", "category": "Security", "tier": "pro", "desc": "Legal hacking basics.",
+      "lessons": [
+        { "title": "Rules of Engagement", "body": "Only test systems you own or have WRITTEN permission for. Get scope in writing. Never touch production data. Ever." },
+        { "title": "Passive Recon", "body": "OSINT without touching the target: WHOIS, Shodan, dnsdumpster, LinkedIn, Google dorks, certificate transparency logs." },
+        { "title": "Active Recon", "body": "Directly touching the target: nmap port scans, banner grabbing, directory busting (gobuster, feroxbuster). Louder, but more info." },
+        { "title": "Vulnerability Scanning", "body": "Nessus, OpenVAS, Nikto flag potential issues. Automated tools are starting points — manual verification is required." },
+        { "title": "Exploitation", "body": "Match vuln to exploit. Test in scope. Document proof (screenshot, log). Never exceed your authorization. Stop when done." },
+        { "title": "Reporting", "body": "Executive summary (business impact), technical findings (CVSS scores), reproduction steps, remediation. The report is the deliverable." }
+      ]
+    },
+    { "id": 12, "title": "Web App Pentesting", "category": "Security", "tier": "pro", "desc": "SQLi, XSS, CSRF, IDOR.",
+      "lessons": [
+        { "title": "SQL Injection", "body": "User input reaches a SQL query unchecked. ' OR 1=1 -- bypasses login. Fix: parameterized queries. Never concatenate user input into SQL." },
+        { "title": "XSS", "body": "Injected JavaScript runs in another user's browser. Steals cookies, hijacks sessions. Fix: escape output, sanitize input, use CSP headers." },
+        { "title": "CSRF", "body": "Trick a logged-in user into making an unwanted request. Fix: CSRF tokens on forms, SameSite=Strict cookies." },
+        { "title": "IDOR", "body": "Change /user/123 to /user/124 and see someone else's data. Fix: server checks ownership on every request, not just the session." },
+        { "title": "File Uploads", "body": "Unrestricted upload = remote code execution. Fix: whitelist extensions, rename files, store outside webroot, scan contents." },
+        { "title": "SSRF", "body": "Server fetches a URL the attacker controls, hits internal services. Fix: whitelist allowed hosts, block internal IPs (169.254.x, 10.x, 127.x)." }
+      ]
+    },
+    { "id": 13, "title": "React Fundamentals", "category": "Web", "tier": "premium", "desc": "Modern UI library.",
+      "lessons": [
+        { "title": "What is React?", "body": "React is a JavaScript library for building UIs from components. Component = function that returns JSX. Everything is composable." },
+        { "title": "JSX", "body": "JSX looks like HTML inside JS: const el = <h1>Hello</h1>. It compiles to React.createElement calls. Use {} to embed JS: <p>{name}</p>." },
+        { "title": "Components & Props", "body": "function Card({ title, body }) { return <div><h3>{title}</h3><p>{body}</p></div>; }. Props are inputs. Read-only inside the component." },
+        { "title": "State with useState", "body": "const [count, setCount] = useState(0);. setCount(count + 1) triggers re-render. State is component memory." },
+        { "title": "useEffect", "body": "useEffect(() => { fetch('/api').then(...); }, []);. Runs after render. Empty array = once. [dep] = when dep changes." },
+        { "title": "Lists & Keys", "body": "{items.map(i => <li key={i.id}>{i.name}</li>)}. Key must be unique and stable. Helps React track which items changed." }
+      ]
+    },
+    { "id": 14, "title": "Docker & Containers", "category": "DevOps", "tier": "elite", "desc": "Ship apps anywhere.",
+      "lessons": [
+        { "title": "What is Docker?", "body": "Docker packages your app + dependencies into a portable container. Same behavior on laptop, server, cloud. Ends 'it works on my machine'." },
+        { "title": "Images vs Containers", "body": "Image = blueprint (read-only). Container = running instance of an image. Build once, run many. Images stored in registries (Docker Hub)." },
+        { "title": "Dockerfile", "body": "FROM node:20. WORKDIR /app. COPY . . RUN npm install. CMD [\"node\", \"index.js\"]. Each line is a layer, cached between builds." },
+        { "title": "Commands", "body": "docker build -t myapp . (build). docker run -p 3000:3000 myapp (run). docker ps (list running). docker logs ID (see output). docker exec -it ID sh (shell in)." },
+        { "title": "Volumes", "body": "docker run -v /host:/container myapp. Persists data outside the container. Essential for databases." },
+        { "title": "Docker Compose", "body": "docker-compose.yml defines multi-container apps. One file for app + DB + cache. docker compose up starts everything." }
+      ]
+    },
+    { "id": 15, "title": "Cloud Fundamentals", "category": "DevOps", "tier": "elite", "desc": "AWS, GCP, Azure basics.",
+      "lessons": [
+        { "title": "What is Cloud?", "body": "Renting computers by the second instead of buying servers. Pay for what you use. Scale up in minutes. Global regions." },
+        { "title": "Core Services", "body": "Compute: EC2 (VM), Lambda (serverless). Storage: S3, GCS. Database: RDS, DynamoDB, Firestore. Networking: VPC, Route 53." },
+        { "title": "IAM", "body": "Identity and Access Management controls who can do what. Users, groups, roles, policies. Least privilege — give minimum needed access." },
+        { "title": "Deploying", "body": "Push code → CI/CD builds → uploads to cloud → runs behind load balancer. Services: AWS CodePipeline, GCP Cloud Build, GitHub Actions." },
+        { "title": "Cost Control", "body": "Watch for: idle instances, oversized VMs, forgotten snapshots, egress bandwidth. Set billing alerts. Kill unused resources weekly." },
+        { "title": "Practice", "body": "Deploy a simple Node app to AWS Lightsail or GCP Compute. Connect a domain. Set up HTTPS. That's a real cloud skill." }
+      ]
+    },
+    { "id": 16, "title": "Cybersecurity Essentials", "category": "Security", "tier": "pro", "desc": "CIA triad, OWASP.",
+      "lessons": [
+        { "title": "CIA Triad", "body": "Confidentiality (only authorized see data). Integrity (no tampering). Availability (stays up for users). Every security decision balances these three." },
+        { "title": "Threat Modeling", "body": "Who attacks? Why? What access? What's the impact? Map it on paper. STRIDE: Spoofing, Tampering, Repudiation, Info disclosure, DoS, Elevation." },
+        { "title": "OWASP Top 10", "body": "1. Broken Access · 2. Crypto failures · 3. Injection · 4. Insecure design · 5. Misconfig · 6. Vulnerable components · 7. Auth failures · 8. Integrity · 9. Logging · 10. SSRF." },
+        { "title": "Defense in Depth", "body": "Multiple layers: firewall, WAF, MFA, patching, backups, logging, monitoring, incident response, employee training. No single layer is enough." },
+        { "title": "Incident Response", "body": "Prepare → Identify → Contain → Eradicate → Recover → Learn. Have a plan BEFORE you need it. Document everything." },
+        { "title": "Practice", "body": "Take a website you built. Walk through OWASP Top 10. Mark which apply. Fix one vulnerability and document the fix." }
+      ]
+    },
+    { "id": 17, "title": "TypeScript", "category": "Language", "tier": "premium", "desc": "Typed JavaScript.",
+      "lessons": [
+        { "title": "Why TypeScript?", "body": "TS adds types to JS. Catch bugs at compile time instead of runtime. Better IDE autocomplete. Scales to large teams." },
+        { "title": "Basic Types", "body": "let name: string = \"Lisa\". let age: number = 19. let active: boolean = true. let items: string[] = []. let data: any — avoid." },
+        { "title": "Interfaces", "body": "interface User { id: number; name: string; email?: string; }. ? means optional. Objects must match or TS errors." },
+        { "title": "Functions", "body": "function greet(name: string): string { return `Hi ${name}`; }. Specify param types and return type. TypeScript enforces contracts." },
+        { "title": "Generics", "body": "function identity<T>(x: T): T { return x; }. Works with any type but keeps type safety. Used heavily in React and APIs." },
+        { "title": "Setup", "body": "npm install -g typescript. tsconfig.json configures the compiler. tsc file.ts compiles to file.js. Use with React via create-react-app --template typescript." }
+      ]
+    },
+    { "id": 18, "title": "MongoDB", "category": "Database", "tier": "premium", "desc": "NoSQL document store.",
+      "lessons": [
+        { "title": "What is MongoDB?", "body": "MongoDB stores JSON-like documents (BSON) instead of rows. Flexible schema. Great for evolving data and rapid prototyping." },
+        { "title": "Collections & Documents", "body": "Database → Collections → Documents. A document is like a row but can have nested objects and arrays. Each has a unique _id." },
+        { "title": "Queries", "body": "db.users.find({ age: { $gt: 18 } }). db.users.findOne({ email: 'x@y.com' }). db.users.insertOne({ name: 'Lisa' })." },
+        { "title": "Update & Delete", "body": "db.users.updateOne({ _id: 1 }, { $set: { name: 'New' } }). db.users.deleteOne({ _id: 1 }). deleteMany for bulk." },
+        { "title": "Aggregation", "body": "db.orders.aggregate([{ $group: { _id: '$user', total: { $sum: '$amount' } } }]). Powerful pipeline for stats and reports." },
+        { "title": "Mongoose (Node)", "body": "const schema = new mongoose.Schema({ name: String, email: String }); const User = mongoose.model('User', schema);. Schema validation + ODM." }
+      ]
+    },
+    { "id": 19, "title": "APIs with FastAPI", "category": "Backend", "tier": "premium", "desc": "Modern Python APIs.",
+      "lessons": [
+        { "title": "What is FastAPI?", "body": "FastAPI is a modern Python web framework. Auto docs, type hints, async support, blazing fast. Great for APIs and microservices." },
+        { "title": "Install & Hello", "body": "pip install fastapi uvicorn. from fastapi import FastAPI; app = FastAPI(); @app.get('/') def home(): return {'msg': 'hi'}. Run: uvicorn main:app --reload." },
+        { "title": "Path & Query Params", "body": "@app.get('/users/{id}') def get(id: int): return {'id': id}. Query params: def search(q: str = None). FastAPI validates automatically." },
+        { "title": "POST with Pydantic", "body": "from pydantic import BaseModel; class User(BaseModel): name: str; email: str. @app.post('/users') def create(u: User): return u. Auto validation." },
+        { "title": "Auth", "body": "JWT in FastAPI: pip install python-jose passlib. Create token on login, verify on protected routes with Depends()." },
+        { "title": "Docs", "body": "Go to /docs — interactive Swagger UI. Every endpoint listed. Try requests live. Built-in OpenAPI schema at /openapi.json." }
+      ]
+    },
+    { "id": 20, "title": "Freelancing & Clients", "category": "Business", "tier": "premium", "desc": "Turn skills into money.",
+      "lessons": [
+        { "title": "Getting Started", "body": "You don't need permission. Build 3 projects. Put them on GitHub. Create a simple portfolio. Start telling people you build websites." },
+        { "title": "Finding Clients", "body": "Fiverr/Upwork for practice. Local businesses for real money. Twitter/LinkedIn for inbound. Referrals are the best long-term channel." },
+        { "title": "Pricing", "body": "Simple site: $200–800. Business site: $800–3000. Web app: $3000+. Always 50% upfront, 50% on delivery. Hourly for ongoing work." },
+        { "title": "Contracts", "body": "Always written. Scope, timeline, price, revisions, payment terms, IP ownership, kill fee. Use a template — don't reinvent." },
+        { "title": "Communication", "body": "Weekly updates. Screenshots. Ask questions early. Say no to scope creep or charge for it. Over-communicate to prevent disasters." },
+        { "title": "Handoff", "body": "Deliver source files. Give admin access. Train the client. Charge for maintenance or offer a retainer. Document everything." }
+      ]
+    }
+  ]
+}
