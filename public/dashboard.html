@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — DarkLoner</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo">Dark<span>Loner</span></a>
+  <div class="nav-links">
+    <span id="user-name" class="muted"></span>
+    <a href="pricing.html">Upgrade</a>
+    <button id="logout" class="btn small">Logout</button>
+  </div>
+</nav>
+
+<main class="dashboard">
+  <h1>Welcome, <span id="greet-name">Learner</span></h1>
+  <p class="muted">Your tier: <strong id="user-tier">free</strong></p>
+
+  <section class="section">
+    <h2>Your Courses</h2>
+    <div id="course-list" class="grid">Loading...</div>
+  </section>
+
+  <section id="upgrade-box" class="upgrade-box" style="display:none;">
+    <h2>Unlock More</h2>
+    <p>Upgrade to access premium cyber security and web dev courses.</p>
+    <a href="pricing.html" class="btn big">See Plans</a>
+  </section>
+</main>
+
+<script src="js/app.js"></script>
+<script>
+(function () {
+  const user = JSON.parse(localStorage.getItem('dl_user') || 'null');
+  if (!user) { window.location.href = 'login.html'; return; }
+
+  document.getElementById('user-name').textContent = user.name || user.email;
+  document.getElementById('greet-name').textContent = user.name || user.email.split('@')[0];
+  document.getElementById('user-tier').textContent = user.tier || 'free';
+
+  if ((user.tier || 'free') === 'free') {
+    document.getElementById('upgrade-box').style.display = 'block';
+  }
+
+  document.getElementById('logout').addEventListener('click', () => {
+    localStorage.removeItem('dl_user');
+    document.cookie = 'token=; Max-Age=0; path=/';
+    window.location.href = 'index.html';
+  });
+
+  loadCourses();
+})();
+</script>
+</body>
+</html>
