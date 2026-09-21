@@ -28,36 +28,33 @@
 </main>
 
 <script>
+async function hashPassword(password) {
+  const enc = new TextEncoder();
+  const data = enc.encode(password + '::darkloner::salt');
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
 document.getElementById('login-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   const f = e.target;
   const msg = document.getElementById('msg');
   msg.textContent = 'Logging in...';
 
-  try {
-    const res = await fetch('/api/users/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-      body: JSON.stringify({ email: f.email.value, password: f.password.value })
-    });
-    const data = await res.json();
-    if (data.success) {
-      localStorage.setItem('dl_user', JSON.stringify(data.user));
-      window.location.href = 'dashboard.html';
-    } else {
-      msg.textContent = data.error || 'Login failed';
-    }
-  } catch (err) {
-    const saved = JSON.parse(localStorage.getItem('dl_user') || 'null');
-    if (saved && saved.email === f.email.value) {
-      window.location.href = 'dashboard.html';
-    } else {
-      const user = { name: f.email.value.split('@')[0], email: f.email.value, tier: 'free' };
-      localStorage.setItem('dl_user', JSON.stringify(user));
-      window.location.href = 'dashboard.html';
-    }
-  }
+  const email = f.email.value.trim().toLowerCase();
+  const password = f.password.value;
+
+  const users = JSON.parse(localStorage.getItem('dl_users') || '[]');
+  const user = users.find(u => u.email === email);
+
+  if (!user) { msg.textContent = 'Invalid email or password'; return; }
+
+  const attemptHash = await hashPassword(password);
+  if (attemptHash !== user.passwordHash) { msg.textContent = 'Invalid email or password'; return; }
+
+  localStorage.setItem('dl_user', JSON.stringify({ name: user.name, email: user.email, tier: user.tier || 'free' }));
+  msg.textContent = '✅ Logged in. Redirecting...';
+  setTimeout(() => window.location.href = 'dashboard.html', 600);
 });
 </script>
 </body>
