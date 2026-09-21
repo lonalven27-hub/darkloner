@@ -29,35 +29,36 @@
 </main>
 
 <script>
+async function hashPassword(password) {
+  const enc = new TextEncoder();
+  const data = enc.encode(password + '::darkloner::salt');
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
 document.getElementById('signup-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   const f = e.target;
   const msg = document.getElementById('msg');
   msg.textContent = 'Creating account...';
 
-  try {
-    const res = await fetch('/api/users/signup', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-      body: JSON.stringify({
-        name: f.name.value,
-        email: f.email.value,
-        password: f.password.value
-      })
-    });
-    const data = await res.json();
-    if (data.success) {
-      localStorage.setItem('dl_user', JSON.stringify(data.user));
-      window.location.href = 'dashboard.html';
-    } else {
-      msg.textContent = data.error || 'Signup failed';
-    }
-  } catch (err) {
-    const user = { name: f.name.value, email: f.email.value, tier: 'free' };
-    localStorage.setItem('dl_user', JSON.stringify(user));
-    window.location.href = 'dashboard.html';
-  }
+  const name = f.name.value.trim();
+  const email = f.email.value.trim().toLowerCase();
+  const password = f.password.value;
+
+  if (password.length < 8) { msg.textContent = 'Password must be 8+ characters'; return; }
+
+  const users = JSON.parse(localStorage.getItem('dl_users') || '[]');
+  if (users.some(u => u.email === email)) { msg.textContent = 'Email already registered'; return; }
+
+  const passwordHash = await hashPassword(password);
+  const user = { name, email, passwordHash, tier: 'free', created: Date.now() };
+  users.push(user);
+  localStorage.setItem('dl_users', JSON.stringify(users));
+  localStorage.setItem('dl_user', JSON.stringify({ name, email, tier: 'free' }));
+
+  msg.textContent = '✅ Account created. Redirecting...';
+  setTimeout(() => window.location.href = 'dashboard.html', 700);
 });
 </script>
 </body>
