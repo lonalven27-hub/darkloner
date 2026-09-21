@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout — DarkLoner</title>
+<link rel="stylesheet" href="css/style.css">
+<script src="https://js.paystack.co/v1/inline.js"></script>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo">Dark<span>Loner</span></a>
+  <div class="nav-links">
+    <a href="pricing.html">← Back to Pricing</a>
+    <button id="logout" class="btn small">Logout</button>
+  </div>
+</nav>
+
+<main class="auth">
+  <h2 id="plan-title">Checkout</h2>
+  <p class="muted" id="plan-desc">Complete payment to unlock</p>
+  <div class="plan" style="margin: 1.5rem 0;">
+    <p class="price" id="plan-price">₦0</p>
+  </div>
+  <button class="btn full" id="pay-btn">Pay with Paystack</button>
+  <div id="pay-msg" class="msg"></div>
+</main>
+
+<script>
+// ⚠️ REPLACE with your real Paystack public key
+const PAYSTACK_PUBLIC_KEY = 'pk_test_REPLACE_ME';
+
+const params = new URLSearchParams(location.search);
+const tier = params.get('tier') || 'premium';
+const amountNaira = parseInt(params.get('amount') || '10000');
+
+const user = JSON.parse(localStorage.getItem('dl_user') || 'null');
+if (!user) { window.location.href = 'signup.html'; }
+
+document.getElementById('plan-title').textContent = 'Checkout — ' + tier.toUpperCase();
+document.getElementById('plan-desc').textContent = 'You are upgrading to ' + tier;
+document.getElementById('plan-price').textContent = '₦' + amountNaira.toLocaleString();
+
+document.getElementById('pay-btn').addEventListener('click', () => {
+  const msg = document.getElementById('pay-msg');
+
+  if (PAYSTACK_PUBLIC_KEY.includes('REPLACE_ME')) {
+    msg.textContent = '⚠️ Paystack public key not set. Ask admin to configure.';
+    return;
+  }
+
+  const handler = PaystackPop.setup({
+    key: PAYSTACK_PUBLIC_KEY,
+    email: user.email,
+    amount: amountNaira * 100,
+    currency: 'NGN',
+    metadata: { custom_fields: [{ display_name: 'Tier', variable_name: 'tier', value: tier }] },
+    callback: function (response) {
+      msg.textContent = '✅ Payment successful. Reference: ' + response.reference;
+      user.tier = tier;
+      localStorage.setItem('dl_user', JSON.stringify(user));
+      const users = JSON.parse(localStorage.getItem('dl_users') || '[]');
+      const idx = users.findIndex(u => u.email === user.email);
+      if (idx >= 0) { users[idx].tier = tier; localStorage.setItem('dl_users', JSON.stringify(users)); }
+      setTimeout(() => window.location.href = 'dashboard.html', 1500);
+    },
+    onClose: function () {
+      msg.textContent = 'Payment cancelled.';
+    }
+  });
+  handler.openIframe();
+});
+
+document.getElementById('logout').addEventListener('click', () => {
+  localStorage.removeItem('dl_user');
+  window.location.href = 'index.html';
+});
+</script>
+</body>
+</html>
