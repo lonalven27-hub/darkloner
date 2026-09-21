@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — DarkLoner</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .admin { max-width: 1100px; margin: 2rem auto; padding: 0 1rem; }
+  .admin input, .admin textarea, .admin select {
+    width: 100%; padding: 0.7rem; margin-bottom: 0.75rem;
+    background: #0a0e14; border: 1px solid #1c2530;
+    color: #e6e6e6; border-radius: 8px; font-size: 0.95rem;
+    font-family: inherit;
+  }
+  .admin textarea { min-height: 100px; resize: vertical; }
+  .admin label { display: block; margin-bottom: 0.3rem; color: #94a3b8; font-size: 0.85rem; }
+  .admin-row { background: #0f141c; border: 1px solid #1c2530; border-radius: 10px; padding: 1rem; margin-bottom: 1rem; }
+  .admin-btn { background: #4ade80; color: #06121a; padding: 0.5rem 1rem; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; margin-right: 0.5rem; }
+  .admin-btn.danger { background: #f87171; }
+  .admin-btn.secondary { background: #1c2530; color: #e6e6e6; }
+  .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #4ade80; color: #06121a; padding: 0.8rem 1.5rem; border-radius: 8px; font-weight: 700; display: none; z-index: 100; }
+  .toast.show { display: block; }
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo">Dark<span>Loner</span></a>
+  <div class="nav-links">
+    <a href="dashboard.html">Dashboard</a>
+    <span id="status" class="muted"></span>
+  </div>
+</nav>
+
+<main class="admin">
+  <h1>Admin Panel</h1>
+  <p class="muted" style="text-align:left; margin-bottom:1rem;">Manage courses. Changes commit to GitHub — Netlify redeploys automatically.</p>
+
+  <div id="token-gate" class="admin-row">
+    <h3>Setup (one time)</h3>
+    <label>GitHub Personal Access Token (starts with ghp_)</label>
+    <input type="password" id="token-input" placeholder="ghp_...">
+    <button class="admin-btn" id="save-token">Save Token</button>
+    <p class="muted" style="text-align:left; margin-top:0.5rem;">Token stored locally on this device only.</p>
+  </div>
+
+  <div id="admin-ui" style="display:none;">
+    <div class="admin-row">
+      <h3>Add New Course</h3>
+      <label>Title</label>
+      <input type="text" id="new-title" placeholder="e.g. Advanced Python">
+      <label>Category</label>
+      <input type="text" id="new-category" placeholder="e.g. Language">
+      <label>Tier</label>
+      <select id="new-tier">
+        <option value="free">free</option>
+        <option value="premium">premium</option>
+        <option value="pro">pro</option>
+        <option value="elite">elite</option>
+      </select>
+      <label>Short Description</label>
+      <input type="text" id="new-desc" placeholder="One line under the title">
+      <label>Lessons (one per line, format: Title | Body)</label>
+      <textarea id="new-lessons" placeholder="What is X? | Explanation here...&#10;Lesson 2 | More content..."></textarea>
+      <button class="admin-btn" id="add-course">Add Course</button>
+    </div>
+
+    <h2 style="margin: 2rem 0 1rem;">All Courses (<span id="course-count">0</span>)</h2>
+    <div id="courses-list"></div>
+
+    <div class="admin-row" style="margin-top:2rem;">
+      <h3>Danger Zone</h3>
+      <button class="admin-btn danger" id="reset-token">Clear Token</button>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+</main>
+
+<script src="js/admin.js"></script>
+</body>
+</html>
