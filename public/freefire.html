@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Fire Sensitivity Generator — DarkLoner</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .ff { max-width: 700px; margin: 2rem auto; padding: 0 1.25rem; }
+  .ff h1 { color: var(--accent); margin-bottom: 0.5rem; }
+  .ff-form { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-top: 1.5rem; }
+  .ff-form label { display: block; color: var(--muted); font-size: 0.85rem; margin: 1rem 0 0.4rem; }
+  .ff-form select, .ff-form input { width: 100%; padding: 0.7rem; background: var(--bg); border: 1px solid var(--border); color: var(--text); border-radius: 8px; font-size: 0.95rem; }
+  .ff-result { background: var(--panel); border: 1px solid var(--accent); border-radius: 12px; padding: 1.5rem; margin-top: 1.5rem; display: none; }
+  .ff-result.show { display: block; }
+  .ff-result h2 { color: var(--accent); margin-bottom: 1rem; }
+  .ff-row { display: flex; justify-content: space-between; padding: 0.6rem 0; border-bottom: 1px solid var(--border); }
+  .ff-row:last-child { border-bottom: none; }
+  .ff-val { color: var(--accent); font-weight: 700; }
+  .ff-note { color: var(--muted); font-size: 0.85rem; margin-top: 1rem; line-height: 1.6; }
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo">Dark<span>Loner</span></a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="dashboard.html">Dashboard</a>
+  </div>
+</nav>
+
+<main class="ff">
+  <h1>Free Fire Sensitivity Generator</h1>
+  <p class="muted">Headshot-tuned settings based on your device and playstyle.</p>
+
+  <div class="ff-form">
+    <label>Device RAM</label>
+    <select id="ram">
+      <option value="2">2 GB</option>
+      <option value="3">3 GB</option>
+      <option value="4" selected>4 GB</option>
+      <option value="6">6 GB</option>
+      <option value="8">8 GB+</option>
+    </select>
+
+    <label>Screen Size</label>
+    <select id="screen">
+      <option value="small">Small (under 6")</option>
+      <option value="medium" selected>Medium (6"–6.5")</option>
+      <option value="large">Large (6.5"+)</option>
+    </select>
+
+    <label>Playstyle</label>
+    <select id="style">
+      <option value="aggressive" selected>Aggressive (rush, close range)</option>
+      <option value="passive">Passive (safe, mid range)</option>
+      <option value="mixed">Mixed</option>
+    </select>
+
+    <label>Primary Weapon</label>
+    <select id="weapon">
+      <option value="ar" selected>AR (AK, M4, SCAR)</option>
+      <option value="smg">SMG (MP40, UMP, Thompson)</option>
+      <option value="sniper">Sniper (AWM, Kar98k)</option>
+      <option value="shotgun">Shotgun (M1014, M1887)</option>
+    </select>
+
+    <button class="btn full" id="generate" style="margin-top: 1.5rem;">Generate Sensitivity</button>
+  </div>
+
+  <div class="ff-result" id="result">
+    <h2>Your Headshot Settings</h2>
+    <div class="ff-row"><span>General</span><span class="ff-val" id="r-general">–</span></div>
+    <div class="ff-row"><span>Red Dot</span><span class="ff-val" id="r-reddot">–</span></div>
+    <div class="ff-row"><span>2x Scope</span><span class="ff-val" id="r-2x">–</span></div>
+    <div class="ff-row"><span>4x Scope</span><span class="ff-val" id="r-4x">–</span></div>
+    <div class="ff-row"><span>Sniper Scope</span><span class="ff-val" id="r-sniper">–</span></div>
+    <div class="ff-row"><span>Free Look</span><span class="ff-val" id="r-freelook">–</span></div>
+    <div class="ff-row"><span>DPI (if supported)</span><span class="ff-val" id="r-dpi">–</span></div>
+    <div class="ff-row"><span>Fire Button Size</span><span class="ff-val" id="r-fire">–</span></div>
+
+    <p class="ff-note" id="ff-note"></p>
+    <p class="ff-note">⚠️ These are recommendations to test. Sensitivity is personal — adjust ±10 and play 3 matches to feel it out. No setting guarantees headshots; practice does.</p>
+  </div>
+</main>
+
+<script>
+const btn = document.getElementById('generate');
+const result = document.getElementById('result');
+
+function clamp(n, min, max) { return Math.min(max, Math.max(min, n)); }
+
+function calculate() {
+  const ram = parseInt(document.getElementById('ram').value);
+  const screen = document.getElementById('screen').value;
+  const style = document.getElementById('style').value;
+  const weapon = document.getElementById('weapon').value;
+
+  // Base values tuned for headshot consistency
+  let general = 90;
+  let reddot = 85;
+  let scope2x = 80;
+  let scope4x = 70;
+  let sniper = 25;
+  let freelook = 60;
+  let dpi = 480;
+  let fire = 65;
+
+  // RAM adjustments — lower RAM = lower values (less lag compensation)
+  if (ram <= 2) { general -= 15; reddot -= 15; scope2x -= 15; dpi = 400; }
+  else if (ram === 3) { general -= 8; reddot -= 8; scope2x -= 8; dpi = 440; }
+  else if (ram === 6) { general += 5; reddot += 5; scope2x += 5; dpi = 520; }
+  else if (ram >= 8) { general += 10; reddot += 10; scope2x += 10; dpi = 560; }
+
+  // Screen size — bigger screen needs lower sens to feel controlled
+  if (screen === 'small') { general += 10; reddot += 10; scope2x += 10; }
+  else if (screen === 'large') { general -= 8; reddot -= 8; scope2x -= 8; }
+
+  // Playstyle
+  if (style === 'aggressive') { general += 10; reddot += 15; scope2x += 10; freelook += 20; }
+  else if (style === 'passive') { general -= 15; reddot -= 10; scope2x -= 5; freelook -= 20; }
+
+  // Weapon
+  if (weapon === 'smg') { reddot += 10; scope2x += 5; }
+  else if (weapon === 'sniper') { sniper += 15; scope4x += 10; general -= 5; }
+  else if (weapon === 'shotgun') { general += 5; reddot += 5; freelook += 15; }
+
+  // Headshot-tilt — always push red dot / 2x slightly higher
+  reddot += 5;
+  scope2x += 5;
+
+  // Clamp
+  general = clamp(general, 40, 100);
+  reddot = clamp(reddot, 40, 100);
+  scope2x = clamp(scope2x, 40, 100);
+  scope4x = clamp(scope4x, 30, 100);
+  sniper = clamp(sniper, 5, 60);
+  freelook = clamp(freelook, 20, 100);
+  dpi = clamp(dpi, 320, 720);
+  fire = clamp(fire, 40, 100);
+
+  // Output
+  document.getElementById('r-general').textContent = general;
+  document.getElementById('r-reddot').textContent = reddot;
+  document.getElementById('r-2x').textContent = scope2x;
+  document.getElementById('r-4x').textContent = scope4x;
+  document.getElementById('r-sniper').textContent = sniper;
+  document.getElementById('r-freelook').textContent = freelook;
+  document.getElementById('r-dpi').textContent = dpi;
+  document.getElementById('r-fire').textContent = fire + '%';
+
+  // Note based on config
+  let note = '';
+  if (style === 'aggressive' && weapon === 'smg') {
+    note = '🔥 Rush setup. High red dot for fast drag headshots. Keep crosshair at neck level.';
+  } else if (style === 'passive' && weapon === 'sniper') {
+    note = '🎯 Long-range setup. Lower general for precision. Practice quick-scope timing.';
+  } else if (style === 'aggressive' && weapon === 'ar') {
+    note = '⚡ Balanced aggressive. Most common pro setup. Red dot is your best friend.';
+  } else {
+    note = '⚔️ Mixed setup. Adjust ±10 based on feel. Test in Training Ground first.';
+  }
+  document.getElementById('ff-note').textContent = note;
+
+  result.classList.add('show');
+  result.scrollIntoView({ behavior: 'smooth' });
+}
+
+btn.addEventListener('click', calculate);
+</script>
+</body>
+</html>
