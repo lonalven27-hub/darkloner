@@ -25,8 +25,8 @@
       <h3>Free</h3>
       <p class="price">₦0</p>
       <ul>
-        <li>HTML & CSS basics</li>
-        <li>JavaScript intro</li>
+        <li>All free courses</li>
+        <li>Basic lessons</li>
         <li>Community access</li>
       </ul>
       <a href="signup.html" class="btn full">Start Free</a>
@@ -37,9 +37,9 @@
       <h3>Premium</h3>
       <p class="price">₦10,000</p>
       <ul>
-        <li>All Free courses</li>
-        <li>Full JavaScript & Node.js</li>
-        <li>Web builder track</li>
+        <li>Everything in Free</li>
+        <li>Node.js, SQL, React, TypeScript, MongoDB, FastAPI</li>
+        <li>Freelancing course</li>
         <li>Certificate</li>
       </ul>
       <button class="btn full" onclick="buy('premium', 10000)">Buy Premium</button>
@@ -50,9 +50,9 @@
       <p class="price">₦30,000</p>
       <ul>
         <li>Everything in Premium</li>
-        <li>Cyber Security track</li>
-        <li>Ethical hacking labs</li>
-        <li>1-on-1 mentor chat</li>
+        <li>Linux, Networking, Ethical Hacking</li>
+        <li>Web App Pentesting</li>
+        <li>Cybersecurity Essentials</li>
       </ul>
       <button class="btn full" onclick="buy('pro', 30000)">Buy Pro</button>
     </div>
@@ -62,8 +62,8 @@
       <p class="price">₦50,000</p>
       <ul>
         <li>Everything in Pro</li>
-        <li>Advanced pentesting</li>
-        <li>Client-ready projects</li>
+        <li>Docker, Cloud Fundamentals</li>
+        <li>Priority support</li>
         <li>Job referral</li>
       </ul>
       <button class="btn full" onclick="buy('elite', 50000)">Buy Elite</button>
@@ -77,15 +77,7 @@
 function buy(tier, amount) {
   const user = JSON.parse(localStorage.getItem('dl_user') || 'null');
   if (!user) { window.location.href = 'signup.html'; return; }
-  const msg = document.getElementById('pay-msg');
-  msg.textContent = 'Processing ' + tier + ' — ₦' + amount.toLocaleString() + '...';
-
-  setTimeout(() => {
-    user.tier = tier;
-    localStorage.setItem('dl_user', JSON.stringify(user));
-    msg.textContent = '✅ ' + tier.toUpperCase() + ' unlocked. Redirecting...';
-    setTimeout(() => window.location.href = 'dashboard.html', 900);
-  }, 800);
+  window.location.href = `payment.html?tier=${tier}&amount=${amount}`;
 }
 </script>
 </body>
