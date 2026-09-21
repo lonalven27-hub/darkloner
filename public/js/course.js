@@ -18,9 +18,7 @@ function escapeHtml(str) {
 function renderLesson() {
   const lesson = course.lessons[currentLesson];
   const total = course.lessons.length;
-
   const progressPct = Math.round(((currentLesson + 1) / total) * 100);
-
   const bodyHtml = escapeHtml(lesson.body).replace(/\n/g, '<br>');
 
   document.getElementById('lesson-container').innerHTML = `
@@ -33,11 +31,7 @@ function renderLesson() {
     <div class="lesson-body">${bodyHtml}</div>
     <div class="lesson-nav">
       <button class="btn ${currentLesson === 0 ? 'disabled' : ''}" id="prev-btn" ${currentLesson === 0 ? 'disabled' : ''}>← Previous</button>
-      ${
-        currentLesson < total - 1
-          ? '<button class="btn" id="next-btn">Next →</button>'
-          : '<a href="dashboard.html" class="btn">✅ Finish Course</a>'
-      }
+      ${currentLesson < total - 1 ? '<button class="btn" id="next-btn">Next →</button>' : '<a href="dashboard.html" class="btn">✅ Finish Course</a>'}
     </div>
   `;
 
